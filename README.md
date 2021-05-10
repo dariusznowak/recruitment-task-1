@@ -7,7 +7,8 @@ I used **CSS Flexbox** to achieve fully responsiveness.<br>
 React useState hook helped me to store the application state.<br>
 I also used simple regular expressions in specifying input labels.
 
-
+## Live demo
+**Check out [live demo HERE](https://dariusznowak.github.io/recruitment-taks-1/)**
 
 # Wigdet screenshot
 ![alt text](https://github.com/dariusznowak/recruitment-task-1/blob/main/img/screenshot.png?raw=true)
