@@ -50,7 +50,8 @@ const Widget = () => {
         targetNumSystem
       );
       setResultNumber(convertedNumber);
-      if (isNaN(convertedNumber)) {
+
+      if (isNaN(convertedNumber) && typeof convertNumber === "number") {
         throw new UserException(
           "Unknown calculation error\nHINT: Check if a given number to convert is in a correct numeral system!"
         );
@@ -80,13 +81,15 @@ const Widget = () => {
           onChange={handleInput}
           value={srcNumSystem}
           type="number"
+          max="36"
+          min="2"
           placeholder="write a whole number > 0..."
           onKeyDown={(e) => {
             if (e.key.match(/^[0-9]+$/) === null && e.key === "27") {
               e.preventDefault();
             }
           }}
-          maxLength="30"
+          maxLength="2"
         ></input>
       </div>
       <div className="input-div">
@@ -97,13 +100,14 @@ const Widget = () => {
           onChange={handleInput}
           value={targetNumSystem}
           type="number"
+          max="36"
+          min="2"
           placeholder="write a whole number > 0..."
           onKeyDown={(e) => {
             if (e.key.match(/^[0-9]+$/) === null && e.key === 27) {
               e.preventDefault();
             }
           }}
-          maxLength="30"
         ></input>
       </div>
       <div className="input-div">
@@ -120,7 +124,7 @@ const Widget = () => {
               e.preventDefault();
             }
           }}
-          maxLength="30"
+          maxLength="14"
         ></input>
       </div>
       <div className="buttons">
@@ -136,7 +140,7 @@ const Widget = () => {
         </button>
       </div>
       <div className="result-box">
-        Result: <span>{resultNumber}</span>
+        <h3>Result:</h3> <div className="result-number">{resultNumber}</div>
       </div>
     </form>
   );
