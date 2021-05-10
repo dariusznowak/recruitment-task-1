@@ -1,0 +1,60 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  border: solid 5px black;
+  margin: 2%;
+
+  width: 700px;
+  height: 700px;
+}
+
+.input-div {
+  display: flex;
+  padding: 1%;
+  justify-content: space-between;
+}
+
+.input-div h3 {
+  margin: 1%;
+}
+
+.input-area {
+  height: 70%;
+  width: 30%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.convert-button {
+  background: rgb(135, 135, 255);
+}
+.clear-button {
+  background: rgb(255, 143, 143);
+}
+
+.button {
+  height: 50px;
+  width: 100px;
+  align-self: center;
+  margin: 1%;
+  border-radius: 20px;
+}
+
+.result-box {
+  display: flex;
+  border: solid 1px black;
+  margin: 10% auto;
+  padding: 1%;
+  min-width: 7%;
+}
+
+.result-box span {
+  color: red;
+  text-align: right;
+  right: 1%;
+}
