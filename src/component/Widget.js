@@ -8,21 +8,57 @@ const Widget = () => {
   const [resultNumber, setResultNumber] = useState("");
 
   const handleInput = (event) => {
-    if (event.target.name === "sourceNumSys") {
-      setSrcNumSystem(event.target.value);
-    } else if (event.target.name === "targetNumSys") {
-      setTargetNumSystem(event.target.value);
-    } else if (event.target.name === "numToConvert") {
-      setNumToConvert(event.target.value);
+    try {
+      let value = "";
+      //preventing pasting floating point numbers
+      if (event.target.name !== "numToConvert") {
+        console.log("tera " + event.target.value);
+        value = Math.round(event.target.value);
+      } else {
+        value = event.target.value;
+      }
+
+      if (
+        value === 0 ||
+        event.target.value === "0" ||
+        event.target.value.startsWith("0")
+      ) {
+        throw new UserException("The number must be greater than 0!");
+      }
+
+      if (event.target.name === "sourceNumSys") {
+        setSrcNumSystem(value);
+      } else if (event.target.name === "targetNumSys") {
+        setTargetNumSystem(value);
+      } else if (event.target.name === "numToConvert") {
+        setNumToConvert(value);
+      }
+    } catch (e) {
+      alert(e.message);
+      console.log(e.message, e.name);
     }
   };
 
+  function UserException(message) {
+    this.message = message;
+    this.name = "UserException";
+  }
+
   const convertNumber = (event) => {
-    const convertedNumber = parseInt(numToConvert, srcNumSystem).toString(
-      targetNumSystem
-    );
-    console.log(convertedNumber);
-    setResultNumber(convertedNumber);
+    try {
+      const convertedNumber = parseInt(numToConvert, srcNumSystem).toString(
+        targetNumSystem
+      );
+      setResultNumber(convertedNumber);
+      if (isNaN(convertedNumber)) {
+        throw new UserException(
+          "Unknown calculation error\nHINT: Check if a given number to convert is in a correct numeral system!"
+        );
+      }
+    } catch (e) {
+      alert(e.message);
+      console.log(e.message, e.name);
+    }
     event.preventDefault();
   };
 
@@ -30,6 +66,7 @@ const Widget = () => {
     setSrcNumSystem("");
     setTargetNumSystem("");
     setNumToConvert("");
+    setResultNumber("");
     event.preventDefault();
   };
 
@@ -42,6 +79,14 @@ const Widget = () => {
           name="sourceNumSys"
           onChange={handleInput}
           value={srcNumSystem}
+          type="number"
+          placeholder="write a whole number > 0..."
+          onKeyDown={(e) => {
+            if (e.key.match(/^[0-9]+$/) === null && e.key === 27) {
+              e.preventDefault();
+            }
+          }}
+          maxLength="30"
         ></input>
       </div>
       <div className="input-div">
@@ -51,6 +96,14 @@ const Widget = () => {
           name="targetNumSys"
           onChange={handleInput}
           value={targetNumSystem}
+          type="number"
+          placeholder="write a whole number > 0..."
+          onKeyDown={(e) => {
+            if (e.key.match(/^[0-9]+$/) === null && e.key === 27) {
+              e.preventDefault();
+            }
+          }}
+          maxLength="30"
         ></input>
       </div>
       <div className="input-div">
@@ -60,20 +113,21 @@ const Widget = () => {
           name="numToConvert"
           onChange={handleInput}
           value={numToConvert}
+          type="text"
+          placeholder="write a number > 0..."
+          onKeyDown={(e) => {
+            if (e.key.match(/^[A-Za-z0-9]+$/) === null) {
+              e.preventDefault();
+            }
+          }}
+          maxLength="30"
         ></input>
       </div>
       <div className="buttons">
         <button
           className="button convert-button"
           onClick={convertNumber}
-          disabled={
-            !srcNumSystem ||
-            !srcNumSystem.trim() ||
-            !targetNumSystem ||
-            !targetNumSystem.trim() ||
-            !numToConvert ||
-            !numToConvert.trim()
-          }
+          disabled={!srcNumSystem || !targetNumSystem || !numToConvert}
         >
           Convert
         </button>
