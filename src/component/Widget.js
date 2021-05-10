@@ -9,9 +9,9 @@ const Widget = () => {
 
   const handleInput = (event) => {
     try {
-      let value = "";
+      let value = " ";
       //preventing pasting floating point numbers
-      if (event.target.name !== "numToConvert") {
+      if (event.target.name !== "numToConvert" && event.target.value !== "") {
         console.log("tera " + event.target.value);
         value = Math.round(event.target.value);
       } else {
@@ -82,7 +82,7 @@ const Widget = () => {
           type="number"
           placeholder="write a whole number > 0..."
           onKeyDown={(e) => {
-            if (e.key.match(/^[0-9]+$/) === null && e.key === 27) {
+            if (e.key.match(/^[0-9]+$/) === null && e.key === "27") {
               e.preventDefault();
             }
           }}
